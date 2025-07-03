@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_estoque
+    restart: always
+    environment:
+      POSTGRES_DB: estoque_db
+      POSTGRES_USER: estoque_user
+      POSTGRES_PASSWORD: estoque_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata_estoque:/var/lib/postgresql/data
+
+volumes:
+  pgdata_estoque:
