@@ -83,7 +83,7 @@ PostgreSQL
 
 Instalação
 Clone o repositório:
-git clone https://github.com/seu-usuario/controle-estoque-obras.git
+git clone https://github.com/Joadson7/apiEstoque.git
 cd controle-estoque-obras
 
 Instale as dependências do frontend:
