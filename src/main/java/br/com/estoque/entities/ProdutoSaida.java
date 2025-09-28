@@ -3,6 +3,7 @@ package br.com.estoque.entities;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import br.com.estoque.enums.RuasEmObra;
 import br.com.estoque.enums.SetorDestino;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +37,19 @@ public class ProdutoSaida {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SetorDestino destino;
+  
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private RuasEmObra ruasEmObra;
+    
+    
+	public RuasEmObra getRuasEmObra() {
+		return ruasEmObra;
+	}
+
+	public void setRuasEmObra(RuasEmObra ruasEmObra) {
+		this.ruasEmObra = ruasEmObra;
+	}
 
 	public SetorDestino getDestino() {
 		return destino;

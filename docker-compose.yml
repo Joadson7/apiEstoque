@@ -2,17 +2,31 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16
-    container_name: postgres_estoque
+    image: postgres:15
+    container_name: estoque_postgres
     restart: always
     environment:
-      POSTGRES_DB: estoque_db
       POSTGRES_USER: estoque_user
       POSTGRES_PASSWORD: estoque_password
+      POSTGRES_DB: estoque_db
     ports:
       - "5434:5432"
     volumes:
-      - pgdata_estoque:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: estoque_backend
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/estoque_db
+      SPRING_DATASOURCE_USERNAME: estoque_user
+      SPRING_DATASOURCE_PASSWORD: estoque_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
 
 volumes:
-  pgdata_estoque:
+  postgres_data:

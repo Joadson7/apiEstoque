@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.estoque.dtos.ProdutoSaidaRequestDto;
 import br.com.estoque.dtos.ProdutoSaidaResponseDto;
 import br.com.estoque.services.ProdutoSaidaService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -29,26 +30,31 @@ public class ProdutoSaidaController {
     @Autowired
     private ProdutoSaidaService service;
 
+    @Operation(summary = "Cadastro de uma saida de produto", description = "Cria uma nova saida de produto no banco de dados.")
     @PostMapping
     public ResponseEntity<ProdutoSaidaResponseDto> criar(@RequestBody @Valid ProdutoSaidaRequestDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 
+    @Operation(summary = "Consulta todas saidas de produtos", description = "Retorna todas saidas de produtos cadastrados no banco de dados.")
     @GetMapping
     public ResponseEntity<List<ProdutoSaidaResponseDto>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
+    @Operation(summary = "Consulta de saida de produto pelo ID", description = "Retorna uma saida de produto específico pelo ID.")
     @GetMapping("{id}")
     public ResponseEntity<ProdutoSaidaResponseDto> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    @Operation(summary = "Edição de saida de produto", description = "Atualiza os dados de uma saida de produto no banco de dados.")
     @PutMapping("{id}")
     public ResponseEntity<ProdutoSaidaResponseDto> atualizar(@PathVariable UUID id, @RequestBody @Valid ProdutoSaidaRequestDto dto) {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
+    @Operation(summary = "Exclusão de uma saida de produto", description = "Exclui uma saida de produto no banco de dados.")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
         service.deletar(id);

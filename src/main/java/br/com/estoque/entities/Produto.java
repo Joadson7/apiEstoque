@@ -30,18 +30,18 @@ public class Produto {
 	private CategoriaProduto categoria;
 	
 	@Column(nullable = false)
-	private boolean ativo = true;
+	private Boolean ativo = true;
 
-	public UUID getId() {
-		return id;
-	}
-
-	public boolean isAtivo() {
+	public Boolean getAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(boolean ativo) {
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 	public void setId(UUID id) {

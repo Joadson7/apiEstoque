@@ -3,6 +3,7 @@ package br.com.estoque.dtos;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import br.com.estoque.enums.RuasEmObra;
 import br.com.estoque.enums.SetorDestino;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +21,9 @@ public record ProdutoSaidaRequestDto(
 	    LocalDate dataSaida,
 
 	    @NotNull(message = "Por favor, informe o destino da saída.")
-	    SetorDestino destino
+	    SetorDestino destino,
+	    
+	    @NotNull(message = "Por favor, informe a rua em obra.")
+	    RuasEmObra ruasEmObra
 
 	) {}

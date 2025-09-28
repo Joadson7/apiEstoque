@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import br.com.estoque.entities.ProdutoSaida;
+import br.com.estoque.enums.RuasEmObra;
 import br.com.estoque.enums.SetorDestino;
 
 public record ProdutoSaidaResponseDto(
@@ -12,7 +13,8 @@ public record ProdutoSaidaResponseDto(
 	    String nomeProduto,
 	    Integer quantidade,
 	    SetorDestino destino,
-	    LocalDate dataSaida
+	    LocalDate dataSaida,
+	    RuasEmObra ruasEmObra
 	) { 
 
 	    public ProdutoSaidaResponseDto(ProdutoSaida saida) {
@@ -22,7 +24,8 @@ public record ProdutoSaidaResponseDto(
 	            saida.getProduto().getNome(),
 	            saida.getQuantidade(),
 	            saida.getDestino(),
-	            saida.getDataSaida()
+	            saida.getDataSaida(),
+	            saida.getRuasEmObra()
 	        );
 	    }
 	}

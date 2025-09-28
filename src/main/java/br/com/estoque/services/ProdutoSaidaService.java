@@ -39,6 +39,7 @@ public class ProdutoSaidaService {
         saida.setQuantidade(dto.quantidade());
         saida.setDataSaida(dto.dataSaida());
         saida.setDestino(dto.destino());
+        saida.setRuasEmObra(dto.ruasEmObra());
 
         // Atualiza o estoque
         produto.setEstoqueAtual(estoqueAtual - dto.quantidade());
@@ -77,6 +78,9 @@ public class ProdutoSaidaService {
         saida.setQuantidade(dto.quantidade());
         saida.setDataSaida(dto.dataSaida());
         saida.setDestino(dto.destino());
+		saida.setRuasEmObra(dto.ruasEmObra());
+
+		// Atualiza o estoque
 
         saidaRepository.save(saida);
         return new ProdutoSaidaResponseDto(saida);

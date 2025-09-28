@@ -4,9 +4,10 @@ public enum SetorDestino {
     ALMOXARIFADO,
     ESGOTO,
     HIDRAULICA,
-    PV,
+    POÇO_DE_VISITA,
     CAIXA_RALO,
     CALÇADA,
     MANUTENÇÃO,
-    MEIO_FIO
+    MEIO_FIO,
+    DRENAGEM
 }

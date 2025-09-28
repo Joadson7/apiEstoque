@@ -10,7 +10,8 @@ public record ProdutoResponseDto(
     String nome,
     String unidade,
     CategoriaProduto categoria,
-    Integer estoqueAtual
+    Integer estoqueAtual,
+    Boolean ativo
 ) {
     public ProdutoResponseDto(Produto produto) {
         this(
@@ -18,7 +19,8 @@ public record ProdutoResponseDto(
             produto.getNome(),
             produto.getUnidadeMedida(),
             produto.getCategoria(), // aqui já retorna o enum
-            produto.getEstoqueAtual()
+            produto.getEstoqueAtual(),
+            produto.getAtivo()
             
         );
     }

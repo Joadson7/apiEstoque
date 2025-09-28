@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.estoque.dtos.ProdutoEntradaRequestDto;
 import br.com.estoque.dtos.ProdutoEntradaResponseDto;
 import br.com.estoque.services.ProdutoEntradaService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -29,21 +30,25 @@ public class ProdutoEntradaController {
     @Autowired
     private ProdutoEntradaService service;
 
+    @Operation(summary = "Cadastro de uma entrada de produto", description = "Cria uma nova entrada de produto no banco de dados.")
     @PostMapping
     public ResponseEntity<ProdutoEntradaResponseDto> post(@RequestBody @Valid ProdutoEntradaRequestDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 
+    @Operation(summary = "Consulta todas entradas de produtos", description = "Retorna todas entradas de produtos cadastrados no banco de dados.")
     @GetMapping
     public ResponseEntity<List<ProdutoEntradaResponseDto>> get() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
+    @Operation(summary = "Consulta de entrada de produto pelo ID", description = "Retorna uma entrada de produto específico pelo ID.")
     @GetMapping("{id}")
     public ResponseEntity<ProdutoEntradaResponseDto> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    @Operation(summary = "Edição de entrada de produto", description = "Atualiza os dados de uma entrada de produto no banco de dados.")
     @PutMapping("{id}")
     public ResponseEntity<ProdutoEntradaResponseDto> put(
             @PathVariable UUID id,
@@ -51,6 +56,7 @@ public class ProdutoEntradaController {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
+    @Operation(summary = "Exclusão de uma entrada de produto", description = "Exclui uma entrada de produto no banco de dados.")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.deletar(id);

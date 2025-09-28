@@ -12,6 +12,7 @@ import br.com.estoque.dtos.ProdutoResponseDto;
 import br.com.estoque.entities.Produto;
 import br.com.estoque.repositories.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
@@ -35,7 +36,14 @@ public class ProdutoService {
                 .map(ProdutoResponseDto::new)
                 .collect(Collectors.toList());
     }
-
+    
+    public List<ProdutoResponseDto> listarAtivos() {
+        return produtoRepository.findAllAtivos()
+                .stream()
+                .map(ProdutoResponseDto::new)
+                .toList();
+    }
+    
     public ProdutoResponseDto buscarPorId(UUID id) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
@@ -53,7 +61,8 @@ public class ProdutoService {
         produtoRepository.save(produto);
         return new ProdutoResponseDto(produto);
     }
-
+    
+    @Transactional
     public void desativar(UUID id) {
         Produto produto = produtoRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
@@ -62,7 +71,4 @@ public class ProdutoService {
         produtoRepository.save(produto);
     }
 
-	public List<ProdutoResponseDto> listarAtivos() {
-		return produtoRepository.findAllAtivos().stream().map(ProdutoResponseDto::new).collect(Collectors.toList());
-	}
 }

@@ -2,10 +2,11 @@ package br.com.estoque.enums;
 
 public enum CategoriaProduto {
 	
-	HIDRAULICA,
+	HIDRÁULICA,
     METAL,
     MADEIRA,
-    ELETRICO,
+    ELÉTRICO,
     FERRAMENTAS,
+    ESCRITÓRIO,
     
 }
