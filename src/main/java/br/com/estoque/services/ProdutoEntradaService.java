@@ -1,5 +1,6 @@
 package br.com.estoque.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,6 +76,33 @@ public class ProdutoEntradaService {
 
         entradaRepository.save(entrada);
         return new ProdutoEntradaResponseDto(entrada);
+    }
+    
+    public List<ProdutoEntradaResponseDto> listarComFiltros(LocalDate dataInicio, LocalDate dataFim, UUID produtoId) {
+        try {
+            List<ProdutoEntrada> entradas;
+            
+            if (dataInicio != null && dataFim != null && produtoId != null) {
+                entradas = entradaRepository.findByDataEntradaBetweenAndProdutoId(dataInicio, dataFim, produtoId);
+            } else if (dataInicio != null && dataFim != null) {
+                entradas = entradaRepository.findByDataEntradaBetween(dataInicio, dataFim);
+            } else if (produtoId != null) {
+                entradas = entradaRepository.findByProdutoId(produtoId);
+            } else if (dataInicio != null) {
+                entradas = entradaRepository.findByDataEntradaGreaterThanEqual(dataInicio);
+            } else if (dataFim != null) {
+                entradas = entradaRepository.findByDataEntradaLessThanEqual(dataFim);
+            } else {
+                entradas = entradaRepository.findAll();
+            }
+            
+            return entradas.stream()
+                    .map(ProdutoEntradaResponseDto::new)
+                    .collect(Collectors.toList());
+                    
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao filtrar entradas: " + e.getMessage(), e);
+        }
     }
 
     public void deletar(UUID id) {

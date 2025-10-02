@@ -1,9 +1,11 @@
 package br.com.estoque.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estoque.dtos.ProdutoEntradaRequestDto;
@@ -54,6 +57,16 @@ public class ProdutoEntradaController {
             @PathVariable UUID id,
             @RequestBody  @Valid ProdutoEntradaRequestDto dto) {
         return ResponseEntity.ok(service.atualizar(id, dto));
+    }
+    
+    @Operation(summary = "Consulta entradas com filtros", description = "Retorna entradas filtradas por data e produto")
+    @GetMapping("/filtro")
+    public ResponseEntity<List<ProdutoEntradaResponseDto>> getComFiltros(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+            @RequestParam(required = false) UUID produtoId) {
+        
+        return ResponseEntity.ok(service.listarComFiltros(dataInicio, dataFim, produtoId));
     }
 
     @Operation(summary = "Exclusão de uma entrada de produto", description = "Exclui uma entrada de produto no banco de dados.")
