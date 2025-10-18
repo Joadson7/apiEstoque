@@ -14,7 +14,8 @@ public record ProdutoSaidaResponseDto(
 	    Integer quantidade,
 	    SetorDestino destino,
 	    LocalDate dataSaida,
-	    RuasEmObra ruasEmObra
+	    RuasEmObra ruasEmObra,
+	    String observacao
 	) { 
 
 	    public ProdutoSaidaResponseDto(ProdutoSaida saida) {
@@ -25,7 +26,8 @@ public record ProdutoSaidaResponseDto(
 	            saida.getQuantidade(),
 	            saida.getDestino(),
 	            saida.getDataSaida(),
-	            saida.getRuasEmObra()
+	            saida.getRuasEmObra(),
+	            saida.getObservacao()
 	        );
 	    }
 	}

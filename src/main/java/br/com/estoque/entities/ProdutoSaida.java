@@ -42,6 +42,9 @@ public class ProdutoSaida {
     @Column(nullable = true)
     private RuasEmObra ruasEmObra;
     
+    @Column(nullable = true)
+    private String observacao;
+    
     
 	public RuasEmObra getRuasEmObra() {
 		return ruasEmObra;
@@ -79,6 +82,14 @@ public class ProdutoSaida {
 		return quantidade;
 	}
 
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
@@ -90,6 +101,7 @@ public class ProdutoSaida {
 	public void setDataSaida(LocalDate dataSaida) {
 		this.dataSaida = dataSaida;
 	}
+
 
 
 }

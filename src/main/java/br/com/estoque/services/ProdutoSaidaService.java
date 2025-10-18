@@ -1,5 +1,6 @@
 package br.com.estoque.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -85,10 +86,39 @@ public class ProdutoSaidaService {
         saidaRepository.save(saida);
         return new ProdutoSaidaResponseDto(saida);
     }
-
+   
     public void deletar(UUID id) {
         ProdutoSaida saida = saidaRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Saída não encontrada"));
         saidaRepository.delete(saida);
     }
+
+
+    public List<ProdutoSaidaResponseDto> listarComFiltros(LocalDate dataInicio, LocalDate dataFim, UUID produtoId) {
+        try {
+            List<ProdutoSaida> saidas;
+            
+            if (dataInicio != null && dataFim != null && produtoId != null) {
+                saidas = saidaRepository.findByDataSaidaBetweenAndProdutoId(dataInicio, dataFim, produtoId);
+            } else if (dataInicio != null && dataFim != null) {
+                saidas = saidaRepository.findByDataSaidaBetween(dataInicio, dataFim);
+            } else if (produtoId != null) {
+                saidas = saidaRepository.findByProdutoId(produtoId);
+            } else if (dataInicio != null) {
+                saidas = saidaRepository.findByDataSaidaGreaterThanEqual(dataInicio);
+            } else if (dataFim != null) {
+                saidas = saidaRepository.findByDataSaidaLessThanEqual(dataFim);
+            } else {
+                saidas = saidaRepository.findAll();
+            }
+            
+            return saidas.stream()
+                    .map(ProdutoSaidaResponseDto::new)
+                    .collect(Collectors.toList());
+                    
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao filtrar saídas: " + e.getMessage(), e);
+        }
+    }
+	
 }

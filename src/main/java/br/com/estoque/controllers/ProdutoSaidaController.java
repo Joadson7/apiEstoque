@@ -1,9 +1,12 @@
 package br.com.estoque.controllers;
 
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estoque.dtos.ProdutoSaidaRequestDto;
@@ -53,7 +57,21 @@ public class ProdutoSaidaController {
     public ResponseEntity<ProdutoSaidaResponseDto> atualizar(@PathVariable UUID id, @RequestBody @Valid ProdutoSaidaRequestDto dto) {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
-
+    
+    @Operation(summary = "Consulta saida com filtros", description = "Retorna saidas filtradas por data e produto")
+    @GetMapping("/filtro")
+    public ResponseEntity<List<ProdutoSaidaResponseDto>> listarComFiltro(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio, 
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+            @RequestParam(required = false) UUID produtoId) {
+        
+        System.out.println("📥 Filtros recebidos - DataInicio: " + dataInicio + 
+                          ", DataFim: " + dataFim + 
+                          ", ProdutoId: " + produtoId);
+        
+        return ResponseEntity.ok(service.listarComFiltros(dataInicio, dataFim, produtoId));
+    }
+    
     @Operation(summary = "Exclusão de uma saida de produto", description = "Exclui uma saida de produto no banco de dados.")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {

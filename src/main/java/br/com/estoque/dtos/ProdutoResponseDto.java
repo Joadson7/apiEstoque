@@ -4,11 +4,12 @@ import java.util.UUID;
 
 import br.com.estoque.entities.Produto;
 import br.com.estoque.enums.CategoriaProduto;
+import br.com.estoque.enums.UnidadeDeMedida;
 
 public record ProdutoResponseDto(
     UUID id,
     String nome,
-    String unidade,
+    UnidadeDeMedida unidadeDeMedida,
     CategoriaProduto categoria,
     Integer estoqueAtual,
     Boolean ativo
@@ -17,7 +18,7 @@ public record ProdutoResponseDto(
         this(
             produto.getId(),
             produto.getNome(),
-            produto.getUnidadeMedida(),
+            produto.getUnidadeDeMedida(), // converte o enum para String
             produto.getCategoria(), // aqui já retorna o enum
             produto.getEstoqueAtual(),
             produto.getAtivo()

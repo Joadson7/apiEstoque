@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,5 +69,17 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoResponseDto>> listarAtivos() {
         return ResponseEntity.ok(produtoService.listarAtivos());
     }
-
+    
+    
+    @Operation(summary = "Consulta de produtos com filtros", description = "Retorna produtos filtrados por nome, categoria, etc.")
+    @GetMapping("/filtrados")
+    public ResponseEntity<List<ProdutoResponseDto>> listarComFiltros(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String categoria,
+            @RequestParam(required = false) String dataInicio,
+            @RequestParam(required = false) String dataFim) {
+        
+        List<ProdutoResponseDto> produtosFiltrados = produtoService.listarComFiltros(nome, categoria, dataInicio, dataFim);
+        return ResponseEntity.ok(produtosFiltrados);
+    }
 }

@@ -3,6 +3,7 @@ package br.com.estoque.entities;
 import java.util.UUID;
 
 import br.com.estoque.enums.CategoriaProduto;
+import br.com.estoque.enums.UnidadeDeMedida;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +22,7 @@ public class Produto {
 	
 	private String nome;
 	
-	private String unidadeMedida; 
+	private UnidadeDeMedida unidadeDeMedida; 
 	
 	private Integer estoqueAtual;
 	
@@ -56,12 +57,13 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public String getUnidadeMedida() {
-		return unidadeMedida;
+
+	public UnidadeDeMedida getUnidadeDeMedida() {
+		return unidadeDeMedida;
 	}
 
-	public void setUnidadeMedida(String unidadeMedida) {
-		this.unidadeMedida = unidadeMedida;
+	public void setUnidadeDeMedida(UnidadeDeMedida unidadeDeMedida) {
+		this.unidadeDeMedida = unidadeDeMedida;
 	}
 
 	public Integer getEstoqueAtual() {

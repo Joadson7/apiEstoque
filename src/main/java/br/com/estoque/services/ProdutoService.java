@@ -23,7 +23,7 @@ public class ProdutoService {
     public ProdutoResponseDto criar(ProdutoRequestDto dto) {
         Produto produto = new Produto();
         produto.setNome(dto.nome());
-        produto.setUnidadeMedida(dto.unidade());
+        produto.setUnidadeDeMedida(dto.unidadeDeMedida());
         produto.setCategoria(dto.categoria());
 
         produtoRepository.save(produto);
@@ -55,7 +55,7 @@ public class ProdutoService {
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
         produto.setNome(dto.nome());
-        produto.setUnidadeMedida(dto.unidade());
+        produto.setUnidadeDeMedida(dto.unidadeDeMedida());
         produto.setCategoria(dto.categoria());
 
         produtoRepository.save(produto);
@@ -71,4 +71,30 @@ public class ProdutoService {
         produtoRepository.save(produto);
     }
 
+    public List<ProdutoResponseDto> listarComFiltros(String nome, String categoria, String dataInicio, String dataFim) {
+        List<Produto> produtos = produtoRepository.findAllAtivos();
+        
+        return produtos.stream()
+            .filter(produto -> filtrarPorNome(produto, nome))
+            .filter(produto -> filtrarPorCategoria(produto, categoria))
+            .filter(produto -> filtrarPorData(produto, dataInicio, dataFim))
+            .map(ProdutoResponseDto::new) // ← Usando o constructor do record
+            .collect(Collectors.toList());
+    }
+
+    private boolean filtrarPorNome(Produto produto, String nome) {
+        return nome == null || nome.trim().isEmpty() || 
+               produto.getNome().toLowerCase().contains(nome.toLowerCase());
+    }
+
+    private boolean filtrarPorCategoria(Produto produto, String categoria) {
+        return categoria == null || categoria.trim().isEmpty() || 
+               produto.getCategoria().name().equals(categoria);
+    }
+
+    private boolean filtrarPorData(Produto produto, String dataInicio, String dataFim) {
+        // Se seus produtos não têm data de cadastro, retorne true
+        // Se tiverem, implemente a lógica de data
+        return true;
+    }
 }
